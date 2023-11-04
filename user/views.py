@@ -2,9 +2,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from user.renderers import UserRenderer
-
 from user.utils import get_tokens_for_user
-from user.serializers import  UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer
+from user.serializers import  UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer, UserLogoutSerializer
 from django.contrib.auth import get_user_model,authenticate
 from rest_framework.permissions import IsAuthenticated
 
@@ -41,3 +40,13 @@ class UserProfileView(APIView):
   def get(self, request, format=None):
     serializer = UserProfileSerializer(request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
+  
+class UserLogoutView(APIView):
+  renderer_classes = [UserRenderer]
+  permission_classes = [IsAuthenticated]
+  def post(self, request, format=None):
+    serializer = UserLogoutSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+
+    return Response({'msg':'Logout Success'}, status=status.HTTP_200_OK)

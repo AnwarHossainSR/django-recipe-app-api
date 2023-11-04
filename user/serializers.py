@@ -3,6 +3,8 @@ from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeErr
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.tokens import RefreshToken
+
 User = get_user_model()
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -36,6 +38,23 @@ class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
     fields = ['id', 'email', 'name', 'is_staff', 'is_superuser']
+
+class UserLogoutSerializer(serializers.Serializer):
+  refresh_token = serializers.CharField()
+  default_error_messages = {
+    'bad_token':'Token is Expired or Invalid'
+  }
+
+  def validate(self, attrs):
+    self.token = attrs.get('refresh_token')
+    return attrs
+
+  def save(self, **kwargs):
+    print('Token', self.token)
+    try:
+      RefreshToken(self.token).blacklist()
+    except:
+      self.fail('bad_token')
 
 class UserChangePasswordSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
