@@ -29,7 +29,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.staticfiles',
     'rest_framework',
-    'user'
+    'django.contrib.staticfiles',
+    'drf_yasg',
+    'user',
 ]
 
 REST_FRAMEWORK = {
