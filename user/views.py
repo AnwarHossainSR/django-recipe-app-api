@@ -7,7 +7,6 @@ from user.serializers import  UserRegistrationSerializer, UserLoginSerializer, U
 from django.contrib.auth import get_user_model,authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenRefreshView
-from drf_yasg.utils import swagger_auto_schema
 
 
 
@@ -15,7 +14,6 @@ from drf_yasg.utils import swagger_auto_schema
 class UserRegistrationView(APIView):
   renderer_classes = [UserRenderer]
   
-  @swagger_auto_schema(request_body=UserRegistrationSerializer, tags=['Authentication'])
   def post(self, request, format=None):
     serializer = UserRegistrationSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -26,7 +24,6 @@ class UserRegistrationView(APIView):
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
 
-  @swagger_auto_schema(request_body=UserLoginSerializer, tags=['Authentication'])
   def post(self, request, format=None):
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -43,7 +40,6 @@ class UserProfileView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
 
-  @swagger_auto_schema(responses={200: UserProfileSerializer},operation_description='description', tags=['Authentication'])
   def get(self, request, format=None):
     serializer = UserProfileSerializer(request.user)
     return Response({'data':serializer.data, 'msg':'Profile retrive success.'}, status=status.HTTP_200_OK)
@@ -52,7 +48,6 @@ class UserLogoutView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
 
-  @swagger_auto_schema(responses={200: UserLogoutSerializer},operation_description='description', tags=['Authentication'])
   def post(self, request, format=None):
     serializer = UserLogoutSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -63,7 +58,6 @@ class UserLogoutView(APIView):
 class CustomTokenRefreshView(TokenRefreshView):
     renderer_classes = [UserRenderer]
 
-    @swagger_auto_schema(responses={200: UserLogoutSerializer},operation_description='description', tags=['Authentication'])
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
        # Extract the response data and status code
