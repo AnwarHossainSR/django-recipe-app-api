@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.staticfiles',
     'rest_framework',
-    'drf_yasg',
+    'drf_spectacular',
     'user',
 ]
 
@@ -37,6 +37,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     #'EXCEPTION_HANDLER': 'exceptions.custom_exception_handler',
 }
 
@@ -144,15 +145,32 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Bearer Token': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header',
-            'scheme': 'Bearer ',
-            "bearerFormat": "Bearer",
-        }
-    },
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Django Recipe API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
     'PERSIST_AUTH': True,
+    'SCHEMA_PATH_PREFIX': r'/api/v1/',
+    'CONTACT': {
+        'name': 'API Support',
+        'url': 'http://www.example.com/support',
+        'email': 'admin@admin.com',
+    },
+    'LICENSE': {
+        'name': 'MIT',
+        'url': 'https://opensource.org/licenses/MIT',
+    },
+    'SERVERS':[
+        {
+            'url': 'http://localhost:8000/api/v1/',
+            'description': 'Local Server'
+        },
+        {
+            'url': 'https://example.com/api/v1/',
+            'description': 'Production Server'
+        }
+    ]
+    #'COMPONENT_SPLIT_REQUEST': True,
+    # OTHER SETTINGS
 }
