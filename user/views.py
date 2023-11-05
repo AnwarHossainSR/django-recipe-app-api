@@ -6,6 +6,7 @@ from user.utils import get_tokens_for_user
 from user.serializers import  UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer, UserLogoutSerializer
 from django.contrib.auth import get_user_model,authenticate
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenRefreshView
 
 
 User = get_user_model()
@@ -49,10 +50,21 @@ class UserLogoutView(APIView):
     serializer.is_valid(raise_exception=True)
     serializer.save()
 
-    return Response({'msg':'Logout Success'}, status=status.HTTP_200_OK)
+    return Response({'msg':'Logout Success'}, status=status.HTTP_204_NO_CONTENT)
 
-class TokenRefreshView(APIView):
-  #generate new access token from refresh token from TokenRefreshView class on simplejwt
-
-  def post(self, request, format=None):
-    pass
+class CustomTokenRefreshView(TokenRefreshView):
+    renderer_classes = [UserRenderer]
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+       # Extract the response data and status code
+        response_data = response.data
+        status_code = response.status_code
+        
+        # Create a new dictionary for the custom response
+        custom_response = {
+            'data': response_data,
+            'msg': 'Token Refresh Success'
+        }
+        
+        # Return the custom response with the appropriate status code
+        return Response(custom_response, status=status_code)
