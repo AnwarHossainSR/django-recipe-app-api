@@ -50,3 +50,9 @@ class UserLogoutView(APIView):
     serializer.save()
 
     return Response({'msg':'Logout Success'}, status=status.HTTP_200_OK)
+
+class TokenRefreshView(APIView):
+  #generate new access token from refresh token from TokenRefreshView class on simplejwt
+
+  def post(self, request, format=None):
+    pass

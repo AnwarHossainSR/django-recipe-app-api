@@ -6,7 +6,10 @@ class UserRenderer(renderers.JSONRenderer):
   def render(self, data, accepted_media_type=None, renderer_context=None):
     response = ''
     if 'ErrorDetail' in str(data):
-      response = json.dumps({'errors':data})
+      if data['code'] == 'token_not_valid':
+        response = json.dumps({'errors':data['messages']})
+      else:
+        response = json.dumps({'errors':data})
     else:
       response = json.dumps(data)
     
