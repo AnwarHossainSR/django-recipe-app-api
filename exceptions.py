@@ -11,11 +11,14 @@ def custom_exception_handler(exc, context):
     if response is not None:
         if 'code' in response.data:
             code = response.data['code']
-        else:
+        elif 'detail' in response.data:
             code = response.data['detail'].code
+        else:
+            code = ''
 
 
-    if code != '':
+    print('Code============', code)
+    if code and code != '':
         if code == 'token_not_valid':
             custom_response_data = {
                 'error': 'Token has expired or is invalid.'
@@ -58,5 +61,11 @@ def custom_exception_handler(exc, context):
             }
             response.data = custom_response_data
             response.status_code = status.HTTP_405_METHOD_NOT_ALLOWED    
+    else:
+        custom_response_data = {
+            'error': 'Method not allowed.'
+        }
+        response.data = custom_response_data
+        response.status_code = status.HTTP_405_METHOD_NOT_ALLOWED  
 
     return response
