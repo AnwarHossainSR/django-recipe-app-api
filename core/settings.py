@@ -29,15 +29,15 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.staticfiles',
     'rest_framework',
-    'user'
+    'drf_yasg',
+    'user',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'EXCEPTION_HANDLER': 'exceptions.custom_exception_handler',
-
+    #'EXCEPTION_HANDLER': 'exceptions.custom_exception_handler',
 }
 
 SIMPLE_JWT = {
@@ -143,3 +143,16 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'scheme': 'Bearer ',
+            "bearerFormat": "Bearer",
+        }
+    },
+    'PERSIST_AUTH': True,
+}
