@@ -1,6 +1,5 @@
 from rest_framework.response import Response
 from rest_framework import status, generics
-from rest_framework.views import APIView
 from user.renderers import UserRenderer
 from user.utils import get_tokens_for_user
 from user.serializers import  UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer, UserLogoutSerializer
