@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'user',
+    'recipe',
 ]
 
 REST_FRAMEWORK = {
@@ -38,11 +39,11 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    #'EXCEPTION_HANDLER': 'exceptions.custom_exception_handler',
+    # 'EXCEPTION_HANDLER': 'exceptions.custom_exception_handler',
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -149,7 +150,7 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Django Recipe API',
     'DESCRIPTION': 'Your project description',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+    'SERVE_INCLUDE_SCHEMA': True,
     'PERSIST_AUTH': True,
     'SCHEMA_PATH_PREFIX': r'/api/v1/',
     'CONTACT': {
@@ -161,16 +162,19 @@ SPECTACULAR_SETTINGS = {
         'name': 'MIT',
         'url': 'https://opensource.org/licenses/MIT',
     },
-    'SERVERS':[
+    'SERVERS': [
         {
-            'url': 'http://localhost:8000/api/v1/',
+            'url': 'http://localhost:8000/',
             'description': 'Local Server'
         },
         {
             'url': 'https://example.com/api/v1/',
             'description': 'Production Server'
         }
-    ]
-    #'COMPONENT_SPLIT_REQUEST': True,
-    # OTHER SETTINGS
+    ],
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
+    'CAMELIZE_NAMES': True,
+    'EXPAND_FIELDS_BY_DEFAULT': False,
 }

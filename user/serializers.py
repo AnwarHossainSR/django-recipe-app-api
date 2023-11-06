@@ -1,15 +1,14 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import UserAccount
 
-User = UserAccount
+User = get_user_model()
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
   # We are writing this becoz we need confirm password field in our Registratin Request
   re_password = serializers.CharField(style={'input_type':'password'}, write_only=True)
   class Meta:
-    model = UserAccount
+    model = User
     fields=['email', 'name', 'password', 're_password']
     extra_kwargs={
       'password':{'write_only':True}

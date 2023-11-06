@@ -1,17 +1,17 @@
 from rest_framework.response import Response
 from rest_framework import status, generics
-from rest_framework.views import APIView
 from user.renderers import UserRenderer
 from user.utils import get_tokens_for_user
 from user.serializers import  UserRegistrationSerializer, UserLoginSerializer, UserProfileSerializer, UserLogoutSerializer
 from django.contrib.auth import authenticate
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.views import TokenRefreshView
 
 
 
 
 class UserRegistrationView(generics.CreateAPIView):
+  permission_classes = [AllowAny]
   serializer_class = UserRegistrationSerializer
   renderer_classes = [UserRenderer]
   
@@ -23,6 +23,7 @@ class UserRegistrationView(generics.CreateAPIView):
     return Response({'data':token, 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
 
 class UserLoginView(generics.CreateAPIView):
+  permission_classes = [AllowAny]
   serializer_class = UserLoginSerializer
   renderer_classes = [UserRenderer]
 
