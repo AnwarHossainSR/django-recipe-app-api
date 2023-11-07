@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 class UserRegistrationView(APIView):
   permission_classes = [AllowAny]
   renderer_classes = [UserRenderer]
+  serializer_class = UserRegistrationSerializer
   
   def post(self, request, format=None):
     serializer = UserRegistrationSerializer(data=request.data)
@@ -23,6 +24,7 @@ class UserRegistrationView(APIView):
 class UserLoginView(APIView):
   permission_classes = [AllowAny]
   renderer_classes = [UserRenderer]
+  serializer_class = UserLoginSerializer
 
   def post(self, request, format=None):
     serializer = UserLoginSerializer(data=request.data)
@@ -39,6 +41,7 @@ class UserLoginView(APIView):
 class UserProfileView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
+  serializer_class = UserProfileSerializer
 
   def get(self, request, format=None):
     serializer = UserProfileSerializer(request.user)
@@ -47,6 +50,7 @@ class UserProfileView(APIView):
 class UserLogoutView(APIView):
   renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
+  serializer_class = UserLogoutSerializer
 
   def post(self, request, format=None):
     serializer = UserLogoutSerializer(data=request.data)
