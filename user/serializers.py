@@ -47,7 +47,6 @@ class UserLogoutSerializer(serializers.Serializer):
     return attrs
 
   def save(self, **kwargs):
-    print('Token', self.token)
     try:
       RefreshToken(self.token).blacklist()
     except:
