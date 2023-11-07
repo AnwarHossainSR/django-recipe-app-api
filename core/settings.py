@@ -26,12 +26,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    #'django.contrib.gis',
+    'rest_framework_gis',
     'corsheaders',
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
     'user',
     'recipe',
+    'spatialapi'
 ]
 
 REST_FRAMEWORK = {
@@ -88,7 +91,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        #'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'HOST': config('DB_HOST'),
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
