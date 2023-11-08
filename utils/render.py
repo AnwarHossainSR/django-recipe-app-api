@@ -15,6 +15,10 @@ class CustomRenderer(renderers.JSONRenderer):
             # Check if data is a list or dict and null or empty
             if data is None or (isinstance(data, list) or isinstance(data, dict)) and not data:
                 response_data['message'] = 'No data found'
+                if isinstance(data, list):
+                    response_data['data'] = []
+                if isinstance(data, dict):
+                    response_data['data'] = {}
             else:
                 response_data['data'] = data
 
