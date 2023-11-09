@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    #'django.contrib.gis',
+    # 'django.contrib.gis',
     'rest_framework_gis',
     'corsheaders',
     'django.contrib.staticfiles',
@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql',
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'HOST': config('DB_HOST'),
         'NAME': config('DB_NAME'),
@@ -179,6 +179,7 @@ SPECTACULAR_SETTINGS = {
     ],
     'SWAGGER_UI_SETTINGS': {
         'persistAuthorization': True,
+        # 'COMPONENT_SPLIT_REQUEST': True
     },
     'CAMELIZE_NAMES': True,
     'EXPAND_FIELDS_BY_DEFAULT': False,
