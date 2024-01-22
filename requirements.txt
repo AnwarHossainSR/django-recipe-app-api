@@ -9,7 +9,7 @@ drf-spectacular==0.26.5
 inflection==0.5.1
 jsonschema==4.19.2
 jsonschema-specifications==2023.7.1
-Pillow==10.1.0
+Pillow==10.2.0
 psycopg==3.1.12
 PyJWT==2.8.0
 python-decouple==3.8
